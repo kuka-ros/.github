@@ -1,29 +1,30 @@
 # KUKA ROS 2 drivers
 
-Reliable, real-time-capable ROS 2 drivers for KUKA robots.
+Reliable, real-time-capable ROS 2 drivers for KUKA robots running iiQKA.OS2.
 
-This organization provides a common `ros2_control` API across KUKA robot
-families and controller operating systems. The drivers hide the underlying
-startup procedure and communication technology, allowing applications to move
-between supported KUKA platforms with minimal changes.
+This organization provides the official ROS 2 driver for KUKA robots running
+iiQKA.OS2. The driver hides the underlying startup procedure and communication
+technology behind a `ros2_control` API.
 
-## Supported KUKA platforms
+## Officially supported platform
 
-- **KSS**: industrial robots using the Robot Sensor Interface (RSI)
-- **Sunrise**: LBR iiwa cobots using the Fast Robot Interface (FRI)
-- **iiQKA**: LBR iisy cobots using ExternalAPI.Control (EAC)
 - **iiQKA.OS2**: industrial robots using RSI 6.0.0 or newer
+
+## Unofficial support for other KUKA operating systems
+
+[Kroshu](https://github.com/kroshu) provides unofficial ROS 2 support for
+KUKA robots running the other KUKA operating systems, including KSS, Sunrise,
+and iiQKA.
 
 ## Documentation
 
 The complete driver documentation is maintained in the [`kuka_drivers`
-wiki](https://github.com/kuka-ros/kuka_drivers/wiki). The source pages are
-also available in the repository:
+package](https://github.com/kuka-ros/kuka_drivers/tree/master/kuka_drivers/doc):
 
-- [KSS and iiQKA.OS2 drivers (RSI)](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/1_RSI.md)
-- [KUKA-specific controllers](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/2_Controllers.md)
-- [Setting up the real-time patch](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/3_Realtime.md)
-- [Driver project overview](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/Home.md)
+- [KSS and iiQKA.OS2 drivers (RSI)](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/1_RSI.md)
+- [KUKA-specific controllers](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/2_Controllers.md)
+- [Setting up the real-time patch](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/3_Realtime.md)
+- [Driver project overview](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/Home.md)
 
 ## Common driver interface
 
@@ -49,7 +50,7 @@ The public control modes are:
 | Wrench | `wrench` |
 
 The exact capabilities depend on the KUKA controller platform. See the
-[supported-features matrix](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/Home.md#supported-features)
+[supported-features matrix](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/Home.md#supported-features)
 before selecting a control mode.
 
 ### Lifecycle startup
@@ -110,7 +111,7 @@ The drivers also expose the internal
 it every controller cycle, and hardware interfaces use it to detect a missed
 or duplicated controller update before writing commands. For the detailed
 dual-arm timing scenarios and launch requirements, see the
-[multi-robot documentation](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/Home.md#multi-robot-scenario).
+[multi-robot documentation](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/Home.md#multi-robot-scenario).
 
 ## MoveIt integration
 
@@ -141,14 +142,13 @@ open_loop_control: true
 	workspace.
 2. Select a robot model and the matching robot description package.
 3. Follow the platform-specific setup guide:
-	- [RSI setup for KSS and iiQKA.OS2](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/1_RSI.md)
-	- [Sunrise FRI documentation](https://github.com/kuka-ros/kuka_drivers/wiki/3_Sunrise-FRI)
-	- [iiQKA EAC documentation](https://github.com/kuka-ros/kuka_drivers/wiki/1-iiQKA-EAC)
+	- [RSI setup for KSS and iiQKA.OS2](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/1_RSI.md)
+	- [Controller documentation](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/2_Controllers.md)
 4. Configure and activate `robot_manager` only after the robot controller is
 	ready for external control.
 
 For real-time Linux setup, use the
-[PREEMPT_RT guide](https://github.com/kuka-ros/kuka_drivers/blob/master/doc/wiki/3_Realtime.md).
+[PREEMPT_RT guide](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/3_Realtime.md).
 
 ## Safety
 
