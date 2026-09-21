@@ -10,9 +10,9 @@ technology behind a `ros2_control` API.
 
 - **iiQKA.OS2**: industrial robots using RSI 6.0.0 or newer
 
-## Unofficial support for other KUKA operating systems
+## Community support for other KUKA operating systems
 
-[Kroshu](https://github.com/kroshu) provides unofficial ROS 2 support for
+[Kroshu](https://github.com/kroshu) provides community ROS 2 support for
 KUKA robots running the other KUKA operating systems, including KSS, Sunrise,
 and iiQKA.
 
