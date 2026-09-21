@@ -22,67 +22,11 @@ The complete driver documentation is maintained in the [`kuka_drivers`
 package](https://github.com/kuka-ros/kuka_drivers/tree/master/kuka_drivers/doc):
 
 - [Driver project overview](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/0_Overview.md)
-- [iQKA.OS2 driver (RSI)](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/1_RSI.md)
+- [iiQKA.OS2 driver (RSI)](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/1_RSI.md)
 - [KUKA-specific controllers](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/2_Controllers.md)
 - [Setting up the real-time patch](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/3_Realtime.md)
+- [External control setup for iiQKA.OS2](https://github.com/kuka-ros/kuka_external_control_sdk/blob/master/kuka_external_control_sdk_common/doc/iiqka_os2_setup.md)
 
-
-## Common driver interface
-
-### Real-time control
-
-All drivers use [`ros2_control`](https://control.ros.org/master/doc/ros2_control/doc/index.html)
-for cyclic control. The robot controller owns the control-cycle timing, so
-the hardware `read()` call waits for the next robot update. For this reason
-the drivers use a custom control node rather than the standard timed
-`ros2_control_node`.
-
-The public control modes are:
-
-| Control mode | Command interfaces |
-| --- | --- |
-| Joint position | `position` |
-| Joint impedance | `position`, `stiffness`, `damping` |
-| Joint velocity | `velocity` |
-| Joint torque | `effort` |
-| Cartesian position | `cart_position` |
-| Cartesian impedance | `cart_position`, `cart_stiffness`, `cart_damping` |
-| Cartesian velocity | `cart_velocity` |
-| Wrench | `wrench` |
-
-The exact capabilities depend on the KUKA controller platform. See the
-[supported-features matrix](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/0_Overview.md#supported-features)
-before selecting a control mode.
-
-### Lifecycle startup
-
-The driver uses a `robot_manager` lifecycle node so external control cannot
-start until the hardware and required controllers are ready:
-
-1. Start the robot-specific launch file.
-2. Configure the driver:
-
-	```bash
-	ros2 lifecycle set robot_manager configure
-	```
-
-3. Activate the driver:
-
-	```bash
-	ros2 lifecycle set robot_manager activate
-	```
-
-The lifecycle states are:
-
-- **unconfigured**: components are running, but no robot connection is needed
-- **configured**: parameters and configuration controllers are ready
-- **active**: external control and cyclic real-time communication are running
-
-To stop external control:
-
-```bash
-ros2 lifecycle set robot_manager deactivate
-```
 
 ## Repository map
 
@@ -91,51 +35,7 @@ ros2 lifecycle set robot_manager deactivate
 - [`kuka_robot_descriptions`](https://github.com/kuka-ros/kuka_robot_descriptions):
   robot models, meshes, URDF/Xacro descriptions, and MoveIt support
 - [`kuka_external_control_sdk`](https://github.com/kuka-ros/kuka_external_control_sdk):
-  controller-side SDK integration for iiQKA and iiQKA.OS2
-- [`examples`](https://github.com/kuka-ros/examples): MoveIt and multi-robot
-  examples
-
-## Multi-robot operation
-
-Since ROS 2 Jazzy, asynchronous `ros2_control` hardware interfaces allow
-multiple robots to share one controller manager. Each asynchronous hardware
-interface can run in its own execution context while the main thread manages
-controller updates.
-
-The hardware descriptions expose these timing parameters:
-
-- `async_thread_priority` (default `69`)
-- `async_affinity` (default empty, allowing any CPU core)
-
-The drivers also expose the internal
-`runtime_config/interpolation_count` interface. The event broadcaster updates
-it every controller cycle, and hardware interfaces use it to detect a missed
-or duplicated controller update before writing commands. For the detailed
-dual-arm timing scenarios and launch requirements, see the
-[multi-robot documentation](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/0_Overview.md#multi-robot-scenario).
-
-## MoveIt integration
-
-`ros2_control` integrates with MoveIt through the
-`joint_trajectory_controller`. The recommended examples are in the
-[`examples`](https://github.com/kuka-ros/examples/tree/master/moveit_example)
-repository, including basic planning, collision avoidance, constrained
-planning, and depalletizing.
-
-When planning in impedance mode, start trajectories from the commanded joint
-positions rather than the measured positions. The impedance controller
-publishes those values on:
-
-```text
-/joint_group_impedance_controller/commanded_positions
-```
-
-For trajectory interpolation without MoveIt, configure the trajectory
-controller with:
-
-```yaml
-open_loop_control: true
-```
+  controller-side SDK integration for iiQKA.OS2
 
 ## Getting started
 
