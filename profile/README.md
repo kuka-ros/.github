@@ -18,14 +18,11 @@ and iiQKA.
 
 ## Documentation
 
-The complete driver documentation is maintained in the [`kuka_drivers`
-package](https://github.com/kuka-ros/kuka_drivers/tree/master/kuka_drivers/doc):
-
 - [Driver project overview](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/0_Overview.md)
+- [External control setup for iiQKA.OS2](https://github.com/kuka-ros/kuka_external_control_sdk/blob/master/kuka_external_control_sdk_common/doc/iiqka_os2_setup.md)
 - [iiQKA.OS2 driver (RSI)](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/1_RSI.md)
 - [KUKA-specific controllers](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/2_Controllers.md)
 - [Setting up the real-time patch](https://github.com/kuka-ros/kuka_drivers/blob/master/kuka_drivers/doc/3_Realtime.md)
-- [External control setup for iiQKA.OS2](https://github.com/kuka-ros/kuka_external_control_sdk/blob/master/kuka_external_control_sdk_common/doc/iiqka_os2_setup.md)
 
 
 ## Repository map
@@ -35,7 +32,7 @@ package](https://github.com/kuka-ros/kuka_drivers/tree/master/kuka_drivers/doc):
 - [`kuka_robot_descriptions`](https://github.com/kuka-ros/kuka_robot_descriptions):
   robot models, meshes, URDF/Xacro descriptions, and MoveIt support
 - [`kuka_external_control_sdk`](https://github.com/kuka-ros/kuka_external_control_sdk):
-  controller-side SDK integration for iiQKA.OS2
+	C++ SDK for client applications and controller configuration for iiQKA.OS2
 
 ## Getting started
 
